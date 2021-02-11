@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
-import { format, subDays } from "date-fns";
+import { format } from "date-fns";
 import numeral from "numeral";
 
 const useStyles = makeStyles((theme) => ({
