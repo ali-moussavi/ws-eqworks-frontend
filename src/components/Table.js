@@ -19,6 +19,7 @@ import {
 import { format, subDays } from "date-fns";
 import numeral from "numeral";
 import LocationButton from "../components/LocationButton";
+import TableHeaderButton from "../components/TableHeaderButton";
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -72,6 +73,8 @@ function CustomTable({
 	const [dates, setDates] = useState([]);
 	const [errorFirstDate, setErrorFirstDate] = useState(false);
 	const [errorSecondDate, setErrorSecondDate] = useState(false);
+	const [compareKey, setCompareKey] = useState("revenue");
+	const [sortDirection, setSortDirection] = useState("asc");
 
 	const classes = useStyles();
 
@@ -133,6 +136,16 @@ function CustomTable({
 		}
 
 		return tableCells;
+	};
+
+	const compare = (a, b, comapreKey_, sortDirection_ = "asc") => {
+		if (a[comapreKey_] < b[comapreKey_]) {
+			return sortDirection_ === "asc" ? 1 : -1;
+		}
+		if (a[comapreKey_] > b[comapreKey_]) {
+			return sortDirection === "asc" ? -1 : 1;
+		}
+		return 0;
 	};
 
 	useEffect(() => {
@@ -226,40 +239,70 @@ function CustomTable({
 								align={"left"}
 								style={{ minWidth: "5rem" }}
 							>
-								{" "}
-								POI Name
+								<TableHeaderButton
+									title="name"
+									titleToShow="POI Name"
+									setSortDirection={setSortDirection}
+									setCompareKey={setCompareKey}
+									isSelected={compareKey === "name"}
+									sortDirection={sortDirection}
+								/>
 							</TableCell>
 							<TableCell
 								key={2}
 								align={"left"}
 								style={{ minWidth: "5rem" }}
 							>
-								{" "}
-								Revenue
+								<TableHeaderButton
+									title="revenue"
+									titleToShow="Revenue"
+									setSortDirection={setSortDirection}
+									setCompareKey={setCompareKey}
+									isSelected={compareKey === "revenue"}
+									sortDirection={sortDirection}
+								/>
 							</TableCell>
 							<TableCell
 								key={3}
 								align={"left"}
 								style={{ minWidth: "5rem" }}
 							>
-								{" "}
-								Impressions
+								<TableHeaderButton
+									title="impressions"
+									titleToShow="Impressions"
+									setSortDirection={setSortDirection}
+									setCompareKey={setCompareKey}
+									isSelected={compareKey === "impressions"}
+									sortDirection={sortDirection}
+								/>
 							</TableCell>
 							<TableCell
 								key={4}
 								align={"left"}
 								style={{ minWidth: "5rem" }}
 							>
-								{" "}
-								Clicks
+								<TableHeaderButton
+									title="clicks"
+									titleToShow="Clicks"
+									setSortDirection={setSortDirection}
+									setCompareKey={setCompareKey}
+									isSelected={compareKey === "clicks"}
+									sortDirection={sortDirection}
+								/>
 							</TableCell>
 							<TableCell
 								key={5}
 								align={"left"}
 								style={{ minWidth: "5rem" }}
 							>
-								{" "}
-								Events
+								<TableHeaderButton
+									title="events"
+									titleToShow="Events"
+									setSortDirection={setSortDirection}
+									setCompareKey={setCompareKey}
+									isSelected={compareKey === "events"}
+									sortDirection={sortDirection}
+								/>
 							</TableCell>
 							<TableCell
 								key={6}
@@ -273,28 +316,35 @@ function CustomTable({
 					</TableHead>
 					<TableBody>
 						{tableData &&
-							tableData.map((row) => {
-								if (
-									!searchTerm ||
-									row.name.toLowerCase().includes(searchTerm)
-								) {
-									return (
-										<TableRow key={row.name}>
-											{generateTableCells(row).map((tableCell) => {
-												return tableCell;
-											})}
-											<TableCell key="location">
-												<LocationButton
-													lat={row.lat}
-													lon={row.lon}
-													setMapZoom={setMapZoom}
-													setMapCenter={setMapCenter}
-												></LocationButton>
-											</TableCell>
-										</TableRow>
-									);
-								}
-							})}
+							[]
+								.concat(tableData)
+								.sort((a, b) => {
+									return compare(a, b, compareKey, sortDirection);
+								})
+								.map((row) => {
+									if (
+										!searchTerm ||
+										row.name.toLowerCase().includes(searchTerm)
+									) {
+										return (
+											<TableRow key={row.name}>
+												{generateTableCells(row).map(
+													(tableCell) => {
+														return tableCell;
+													}
+												)}
+												<TableCell key="location">
+													<LocationButton
+														lat={row.lat}
+														lon={row.lon}
+														setMapZoom={setMapZoom}
+														setMapCenter={setMapCenter}
+													></LocationButton>
+												</TableCell>
+											</TableRow>
+										);
+									}
+								})}
 					</TableBody>
 				</Table>
 			</TableContainer>
