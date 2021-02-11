@@ -16,7 +16,7 @@ function Events() {
 				setHourlyEvents(JSON.parse(sessionStorage.getItem("hourlyEvents")));
 				setDailyEvents(JSON.parse(sessionStorage.getItem("dailyEvents")));
 			} else {
-				await fetch("api/events/hourly")
+				await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/hourly")
 					.then((response) => {
 						return response.json();
 					})
@@ -25,7 +25,7 @@ function Events() {
 						sessionStorage.setItem("hourlyEvents", JSON.stringify(data));
 					});
 
-				await fetch("api/events/daily")
+				await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/daily")
 					.then((response) => {
 						return response.json();
 					})

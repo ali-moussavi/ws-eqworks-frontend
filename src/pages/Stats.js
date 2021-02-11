@@ -16,7 +16,7 @@ function Stats() {
 				setHourlyStats(JSON.parse(sessionStorage.getItem("hourlyStats")));
 				setDailyStats(JSON.parse(sessionStorage.getItem("dailyStats")));
 			} else {
-				await fetch("api/stats/hourly")
+				await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/hourly")
 					.then((response) => {
 						return response.json();
 					})
@@ -25,7 +25,7 @@ function Stats() {
 						sessionStorage.setItem("hourlyStats", JSON.stringify(data));
 					});
 
-				await fetch("api/stats/daily")
+				await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/daily")
 					.then((response) => {
 						return response.json();
 					})

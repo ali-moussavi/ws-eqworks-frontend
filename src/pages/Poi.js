@@ -77,7 +77,7 @@ function Poi() {
 				setPoiData(poiDataFromStorage);
 				setPoiNames(generatePoiNames(poiDataFromStorage));
 			} else {
-				await fetch("api/poi")
+				await fetch(process.env.REACT_APP_BACKEND_URL + "api/poi")
 					.then((response) => {
 						return response.json();
 					})

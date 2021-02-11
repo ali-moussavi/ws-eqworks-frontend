@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		margin: "1rem",
+		margin: "1.5rem",
 		borderRadius: "10px",
 		boxShadow: "0 0 25px rgb(0 0 0 / 18%)",
 		[theme.breakpoints.down("l")]: {
