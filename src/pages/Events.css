@@ -1,0 +1,12 @@
+.EventsPage {
+	flex-grow: 1;
+	min-height: 100vh;
+	background-color: rgb(245 246 250);
+}
+
+.graphContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
