@@ -16,7 +16,7 @@ import {
 	TableRow,
 	TextField,
 } from "@material-ui/core";
-import { format, subDays } from "date-fns";
+import { format } from "date-fns";
 import numeral from "numeral";
 import LocationButton from "../components/LocationButton";
 import TableHeaderButton from "../components/TableHeaderButton";
@@ -179,16 +179,13 @@ function CustomTable({
 								return (
 									<MenuItem value={date} key={i + 1}>
 										{" "}
-										{format(
-											subDays(new Date(date), 1),
-											"dd MMM yyyy"
-										)}{" "}
+										{format(new Date(date), "dd MMM yyyy")}{" "}
 									</MenuItem>
 								);
 							})
 						) : (
 							<MenuItem value={dateOne} key={1}>
-								{format(subDays(new Date(dateOne), 1), "dd MMM yyyy")}
+								{format(new Date(dateOne), "dd MMM yyyy")}
 							</MenuItem>
 						)}
 					</Select>
@@ -210,16 +207,13 @@ function CustomTable({
 								return (
 									<MenuItem value={date} key={i + 1}>
 										{" "}
-										{format(
-											subDays(new Date(date), 1),
-											"dd MMM yyyy"
-										)}{" "}
+										{format(new Date(date), "dd MMM yyyy")}{" "}
 									</MenuItem>
 								);
 							})
 						) : (
 							<MenuItem value={dateTwo} key={1}>
-								{format(subDays(new Date(dateTwo), 1), "dd MMM yyyy")}
+								{format(new Date(dateTwo), "dd MMM yyyy")}
 							</MenuItem>
 						)}
 					</Select>

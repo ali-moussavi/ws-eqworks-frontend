@@ -267,16 +267,13 @@ function BarGraph({
 									return (
 										<MenuItem value={date} key={i + 1}>
 											{" "}
-											{format(
-												subDays(new Date(date), 1),
-												"dd MMM yyyy"
-											)}{" "}
+											{format(new Date(date), "dd MMM yyyy")}{" "}
 										</MenuItem>
 									);
 								})
 							) : (
 								<MenuItem value={date} key={1}>
-									{format(subDays(new Date(date), 1), "dd MMM yyyy")}
+									{format(new Date(date), "dd MMM yyyy")}
 								</MenuItem>
 							)}
 						</Select>
