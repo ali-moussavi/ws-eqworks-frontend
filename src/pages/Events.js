@@ -2,48 +2,50 @@ import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState, Fragment } from "react";
 import LineGraph from "../components/LineGraph";
 import BarGraph from "../components/BarGraph";
+import { dailyEvents } from "../data/eventsDaily";
+import { hourlyEvents } from "../data/eventsHourly";
 
 import "./Events.css";
 
 function Events() {
-	const [hourlyEvents, setHourlyEvents] = useState([]);
-	const [dailyEvents, setDailyEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (sessionStorage.getItem("hourlyEvents")) {
-				setHourlyEvents(JSON.parse(sessionStorage.getItem("hourlyEvents")));
-				setDailyEvents(JSON.parse(sessionStorage.getItem("dailyEvents")));
-			} else {
-				await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/hourly")
-					.then((response) => {
-						return response.json();
-					})
-					.then((data) => {
-						setHourlyEvents(data);
-						sessionStorage.setItem("hourlyEvents", JSON.stringify(data));
-					});
+		// const fetchData = async () => {
+		// 	if (sessionStorage.getItem("hourlyEvents")) {
+		// 		setHourlyEvents(JSON.parse(sessionStorage.getItem("hourlyEvents")));
+		// 		setDailyEvents(JSON.parse(sessionStorage.getItem("dailyEvents")));
+		// 	} else {
+		// 		await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/hourly")
+		// 			.then((response) => {
+		// 				return response.json();
+		// 			})
+		// 			.then((data) => {
+		// 				setHourlyEvents(data);
+		// 				sessionStorage.setItem("hourlyEvents", JSON.stringify(data));
+		// 			});
 
-				await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/daily")
-					.then((response) => {
-						return response.json();
-					})
-					.then((data) => {
-						//console.log(data);
-						setDailyEvents(data);
-						sessionStorage.setItem("dailyEvents", JSON.stringify(data));
-					});
-			}
-		};
+		// 		await fetch(process.env.REACT_APP_BACKEND_URL + "api/events/daily")
+		// 			.then((response) => {
+		// 				return response.json();
+		// 			})
+		// 			.then((data) => {
+		// 				//console.log(data);
+		// 				setDailyEvents(data);
+		// 				sessionStorage.setItem("dailyEvents", JSON.stringify(data));
+		// 			});
+		// 	}
+		// };
 
-		fetchData()
-			.then(() => {
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// fetchData()
+		// 	.then(() => {
+		// 		setLoading(false);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
+
+		setLoading(false);
 	}, []);
 
 	return (

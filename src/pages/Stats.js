@@ -3,46 +3,48 @@ import React, { useEffect, useState } from "react";
 import LineGraph from "../components/LineGraph";
 import BarGraph from "../components/BarGraph";
 
+import { dailyStats } from "../data/statsDaily";
+import { hourlyStats } from "../data/statsHourly";
 import "./Stats.css";
 
 function Stats() {
-	const [hourlyStats, setHourlyStats] = useState([]);
-	const [dailyStats, setDailyStats] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (sessionStorage.getItem("hourlyStats")) {
-				setHourlyStats(JSON.parse(sessionStorage.getItem("hourlyStats")));
-				setDailyStats(JSON.parse(sessionStorage.getItem("dailyStats")));
-			} else {
-				await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/hourly")
-					.then((response) => {
-						return response.json();
-					})
-					.then((data) => {
-						setHourlyStats(data);
-						sessionStorage.setItem("hourlyStats", JSON.stringify(data));
-					});
+		// const fetchData = async () => {
+		// 	if (sessionStorage.getItem("hourlyStats")) {
+		// 		setHourlyStats(JSON.parse(sessionStorage.getItem("hourlyStats")));
+		// 		setDailyStats(JSON.parse(sessionStorage.getItem("dailyStats")));
+		// 	} else {
+		// 		await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/hourly")
+		// 			.then((response) => {
+		// 				return response.json();
+		// 			})
+		// 			.then((data) => {
+		// 				setHourlyStats(data);
+		// 				sessionStorage.setItem("hourlyStats", JSON.stringify(data));
+		// 			});
 
-				await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/daily")
-					.then((response) => {
-						return response.json();
-					})
-					.then((data) => {
-						setDailyStats(data);
-						sessionStorage.setItem("dailyStats", JSON.stringify(data));
-					});
-			}
-		};
+		// 		await fetch(process.env.REACT_APP_BACKEND_URL + "api/stats/daily")
+		// 			.then((response) => {
+		// 				return response.json();
+		// 			})
+		// 			.then((data) => {
+		// 				setDailyStats(data);
+		// 				sessionStorage.setItem("dailyStats", JSON.stringify(data));
+		// 			});
+		// 	}
+		// };
 
-		fetchData()
-			.then(() => {
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// fetchData()
+		// 	.then(() => {
+		// 		setLoading(false);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
+
+		setLoading(false);
 	}, []);
 
 	return (

@@ -66,6 +66,7 @@ function CustomTable({
 	poiNames,
 	setMapCenter,
 	setMapZoom,
+	scrollToBottom,
 }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [dateOne, setDateOne] = useState("");
@@ -318,7 +319,9 @@ function CustomTable({
 								.map((row) => {
 									if (
 										!searchTerm ||
-										row.name.toLowerCase().includes(searchTerm)
+										row.name
+											.toLowerCase()
+											.includes(searchTerm.toLowerCase())
 									) {
 										return (
 											<TableRow key={row.name}>
@@ -333,6 +336,7 @@ function CustomTable({
 														lon={row.lon}
 														setMapZoom={setMapZoom}
 														setMapCenter={setMapCenter}
+														scrollToBottom={scrollToBottom}
 													></LocationButton>
 												</TableCell>
 											</TableRow>

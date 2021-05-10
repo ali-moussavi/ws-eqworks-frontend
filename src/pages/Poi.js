@@ -1,7 +1,10 @@
 import { Card, CircularProgress, Grid, makeStyles, Typography } from "@material-ui/core";
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useRef } from "react";
 import CustomTable from "../components/Table";
 import Map from "../components/Map";
+
+import { poiData } from "../data/poiData";
+
 import "./Poi.css";
 
 const useStyles = makeStyles({
@@ -15,14 +18,22 @@ const useStyles = makeStyles({
 });
 
 function Poi() {
-	const [poiData, setPoiData] = useState([]);
 	const [mapCenter, setMapCenter] = useState({ lat: 47.279229, lng: -99.492188 });
 	const [mapZoom, setMapZoom] = useState(3);
 	const [poiNames, setPoiNames] = useState([]);
 	const [tableData, setTableData] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	const classes = useStyles();
+
+	const scrollToBottom = () => {
+		window.scrollTo({
+			top: document.documentElement.scrollHeight,
+			behavior: "smooth",
+			/* you can also use 'auto' behaviour 
+			   in place of 'smooth' */
+		});
+	};
 
 	const generatePoiNames = (rawData_) => {
 		let poiNames = [];
@@ -71,31 +82,33 @@ function Poi() {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (sessionStorage.getItem("poiData")) {
-				let poiDataFromStorage = JSON.parse(sessionStorage.getItem("poiData"));
-				setPoiData(poiDataFromStorage);
-				setPoiNames(generatePoiNames(poiDataFromStorage));
-			} else {
-				await fetch(process.env.REACT_APP_BACKEND_URL + "api/poi")
-					.then((response) => {
-						return response.json();
-					})
-					.then((data) => {
-						setPoiData(data);
-						setPoiNames(generatePoiNames(data));
-						sessionStorage.setItem("poiData", JSON.stringify(data));
-					});
-			}
-		};
+		// const fetchData = async () => {
+		// 	if (sessionStorage.getItem("poiData")) {
+		// 		let poiDataFromStorage = JSON.parse(sessionStorage.getItem("poiData"));
+		// 		setPoiData(poiDataFromStorage);
+		// 		setPoiNames(generatePoiNames(poiDataFromStorage));
+		// 	} else {
+		// 		await fetch(process.env.REACT_APP_BACKEND_URL + "api/poi")
+		// 			.then((response) => {
+		// 				return response.json();
+		// 			})
+		// 			.then((data) => {
+		// 				setPoiData(data);
 
-		fetchData()
-			.then(() => {
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// 				sessionStorage.setItem("poiData", JSON.stringify(data));
+		// 			});
+		// 	}
+		// };
+
+		setPoiNames(generatePoiNames(poiData));
+		setLoading(false);
+		// fetchData()
+		// 	.then(() => {
+		// 		setLoading(false);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
 	}, []);
 
 	useEffect(() => {
@@ -163,6 +176,7 @@ function Poi() {
 								poiNames={poiNames}
 								setMapCenter={setMapCenter}
 								setMapZoom={setMapZoom}
+								scrollToBottom={scrollToBottom}
 							/>
 						</Grid>
 						<Grid item xs={12}>

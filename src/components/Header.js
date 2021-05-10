@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/core";
-import logo from "../static/logo-eq-works-white.webp";
+import logo from "../static/Logo.png";
 import { Link as routerLink, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ function Header() {
 						style={{ height: "100%", flexGrow: "1" }}
 						alignItems="center"
 					>
-						<img src={logo} alt="mockup" style={{ height: "40px" }} />
+						<img src={logo} alt="mockup" style={{ height: "42px" }} />
 					</Box>
 					<Button
 						component={routerLink}
